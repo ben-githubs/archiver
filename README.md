@@ -31,7 +31,7 @@ Archiver will add all files to the archive root as they are relative to their or
 dir_1/foo               ->  /dir_1/foo
 dir_1/subdir/foo        ->  /dir_1/subdir/foo
 dir_2/dir_3/bar         ->  /dir_3/bar
-dir_2/dir_3/subdir/foo  ->  /dir_3/subdir/bar
+dir_2/dir_3/subdir/foo  ->  /dir_3/subdir/foo
 ```
 
 Be cautious of name collisions. In the case of multiple files mapping to the same archive path, the one specified later will overwrite the previous one. For example, in the following command, `a.archive('target.zip', 'a/foo', 'b/c/foo')`, a file `a/foo/bar` would be ignored in favour of `b/c/foo/bar`, if it exists.
