@@ -13,11 +13,11 @@ from archiver import Archiver
 
 Next, create the archiver object. You can optionally specify a filter file to ignore particular paths.
 ```
-a = Archiver
+a = Archiver()
 ```
 or
 ```
-a = Archiver(filter_file=".ignore")
+a = Archiver(".ignore")
 ```
 If you specify a filter file, the path must be relative to where the command is executed from. The rules for filtering are the same as when using a `.gitignore` file.
 
@@ -28,13 +28,13 @@ a.archive('myzip.zip', 'dir_1', 'dir_2/dir_3')
 
 Archiver will add all files to the archive root as they are relative to their original source folder. For example:
 ```
-dir_1/foo              ->  /foo
-dir_1/subdir/foo       ->  /subdir/foo
-dir_2/dir_3/bar        ->  /bar
-dir_2/dir_3/dir_4/foo  ->  /dir_4/bar
+dir_1/foo               ->  /dir_1/foo
+dir_1/subdir/foo        ->  /dir_1/subdir/foo
+dir_2/dir_3/bar         ->  /dir_3/bar
+dir_2/dir_3/subdir/foo  ->  /dir_3/subdir/bar
 ```
 
-In the case of multiple files mapping to the same archive path, the one specified later will overwrite the previous one. For example, if both `dir_1/foo` and `dir_2/dir_3/foo` exist, then only `dir_2/dir_3/foo` will be added as `/foo` to the final zip archive.
+Be cautious of name collisions. In the case of multiple files mapping to the same archive path, the one specified later will overwrite the previous one. For example, in the following command, `a.archive('target.zip', 'a/foo', 'b/c/foo')`, a file `a/foo/bar` would be ignored in favour of `b/c/foo/bar`, if it exists.
 
 When archiving individual files, they are saved in the root of the archive, regardless of where they were originally located relative to the current working directory. `a.archive('myzip.zip', 'foo/myfile.bar')` will result in an archive with `myfile.bar` at it's root.
 
